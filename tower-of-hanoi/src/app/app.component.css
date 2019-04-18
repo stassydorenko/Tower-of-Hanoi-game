@@ -1,0 +1,12 @@
+.tower{
+    width:30px;
+    height:370px;
+    background:grey;
+    position: absolute; top:350px;
+    border: 4px outset;
+ }
+
+ .circle:before {
+    content: ' \25CF';
+    font-size: 200px;
+  }
