@@ -17,9 +17,11 @@ export class AppComponent implements OnInit{
 
   ngOnInit() {
     let tower1 = new TowersComponent(1);
-    let tower1DiskPosition1 = new DiskPosition();
-    // tower1DiskPosition1.x = 
+    let tower1DiskPosition1 = new DiskPosition(575, 670);
+    let tower1DiskPosition2 = new DiskPosition(575, 610);
+    let tower1DiskPosition3 = new DiskPosition(575, 550);
 
+    
     // tower1.diskPositions[0] = 
 
   }
