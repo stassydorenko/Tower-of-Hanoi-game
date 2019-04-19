@@ -6,7 +6,11 @@
     border: 4px outset;
  }
 
- .circle:before {
-    content: ' \25CF';
-    font-size: 200px;
-  }
+.disk{
+   background-color:brown;
+   border:2px solid black;    
+   border-radius:45%;
+   -moz-border-radius:45%;
+   -webkit-border-radius:45%;
+   position: absolute;
+}

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { DiskComponent } from '../disk/disk.component';
+import { DiskPosition } from './disk.position';
+
 
 @Component({
   selector: 'app-towers',
@@ -7,7 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TowersComponent implements OnInit {
 
-  constructor() { }
+  position: number;
+  diskPositions: DiskPosition[];
+
+  constructor(position: number) {
+     this.position = position;
+  }
 
   ngOnInit() {
   }
