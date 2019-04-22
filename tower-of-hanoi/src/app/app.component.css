@@ -1,8 +1,7 @@
 .tower{
-    width:30px;
-    height:370px;
+    width:40px;
+    height:400px;
     background:grey;
-    position: absolute; top:350px;
     border: 4px outset;
  }
 
@@ -12,5 +11,5 @@
    border-radius:45%;
    -moz-border-radius:45%;
    -webkit-border-radius:45%;
-   position: absolute;
+   margin-bottom: 35px;
 }
