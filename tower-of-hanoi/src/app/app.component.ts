@@ -16,25 +16,17 @@ export class AppComponent implements OnInit{
   private towers: TowersComponent[];
 
   ngOnInit() {
-    let tower1 = new TowersComponent(1);
-    let tower1DiskPosition1 = new DiskPosition(575, 670);
-    let tower1DiskPosition2 = new DiskPosition(575, 610);
-    let tower1DiskPosition3 = new DiskPosition(575, 550);
-
-    
-    // tower1.diskPositions[0] = 
-
+    this.towers = [new TowersComponent("tower1", 1),
+                   new TowersComponent("tower2", 2),
+                   new TowersComponent("tower3", 3)];   
+    this.towers[0].createDisks();
   }
 
   onStart(): void {
     if(this.diskNumber != undefined) {
       //hide start game form
-      this.isStart = false;
-     
-
-
+      this.isStart = false;    
     }
-    
   }
 
 }

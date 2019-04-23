@@ -1,12 +1,12 @@
 import { DiskComponent } from '../disk/disk.component';
 
 export class DiskPosition {
-    center: number;
+    leftOffset: number;
     topOffset: number;
     disk: DiskComponent;
 
-    constructor(center: number, topOffset: number){
-        this.center = center;
+    constructor(leftOffset: number, topOffset: number){
+        this.leftOffset = leftOffset;
         this.topOffset = topOffset;
     }
 }

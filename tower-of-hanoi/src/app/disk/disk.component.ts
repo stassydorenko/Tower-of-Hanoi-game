@@ -7,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DiskComponent implements OnInit {
 
-  private size: number;
+  size: number;
+  topOffset: number;
+  leftOffset: number;
 
   constructor(size: number) {
     this.size = size;
