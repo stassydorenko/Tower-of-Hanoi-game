@@ -10,10 +10,10 @@ import { DiskPosition } from './towers/disk.position';
 })
 export class AppComponent implements OnInit{
 
-  private title = 'The Towers of Hanoi game';
-  private isStart: boolean = true;
-  private diskNumber: number;
-  private towers: TowersComponent[];
+  title: string = 'The Towers of Hanoi game';
+  isStart: boolean = true;
+  diskNumber: number;
+  towers: TowersComponent[];
 
   ngOnInit() {
     this.towers = [new TowersComponent("tower1", 1),

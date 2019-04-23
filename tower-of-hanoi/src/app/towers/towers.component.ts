@@ -10,11 +10,12 @@ import { DiskPosition } from './disk.position';
 })
 export class TowersComponent implements OnInit {
 
-  private TOWER_BORDER = 4;
-  private DISK_BORDER = 2;
-  private DISTANCE_BETWEEN_DISKS = 60;
-  private DISK_WIDTH = 250;
-
+  towerBorder: number = 4;
+  diskBorder: number = 2;
+  distanceBetweenDisks: number = 60;
+  diskWidth: number = 250;
+  towerHeigth: number = 400;
+  towerWidth: number = 40;
   towerId: string;
   towerPosition: number;
   diskPositions: DiskPosition[];
@@ -22,10 +23,10 @@ export class TowersComponent implements OnInit {
   constructor(towerId: string, towerPosition: number) {
     this.towerId = towerId;
     this.towerPosition = towerPosition;
+    this.initializeTower();
   }
   
   ngOnInit() {
-    this.initializeTower();
   }
 
   private initializeTower() {
@@ -33,35 +34,35 @@ export class TowersComponent implements OnInit {
     let towerTopOffset = clientRect.top;
     let towerLeftOffset = clientRect.left;
 
-    let disk1PositionTopOffset = towerTopOffset - towerLeftOffset / 5
-    let disk1PositionLeftOffset = towerLeftOffset - this.TOWER_BORDER - this.DISK_BORDER;
+    let disk1PositionTopOffset = towerTopOffset + (this.towerHeigth - this.towerHeigth / 5)
+    let disk1PositionLeftOffset = towerLeftOffset - this.towerBorder - this.diskBorder;
 
     let diskPosition1 = new DiskPosition(disk1PositionLeftOffset, 
                                          disk1PositionTopOffset);                       
     let diskPosition2 = new DiskPosition(disk1PositionLeftOffset, 
-                                         disk1PositionTopOffset + this.DISTANCE_BETWEEN_DISKS);
+                                         disk1PositionTopOffset - this.distanceBetweenDisks);
     let diskPosition3 = new DiskPosition(disk1PositionLeftOffset, 
-                                         disk1PositionTopOffset + this.DISTANCE_BETWEEN_DISKS * 2);
+                                         disk1PositionTopOffset - this.distanceBetweenDisks * 2);
     this.diskPositions = [diskPosition1, diskPosition2, diskPosition3];
   }
 
   createDisks() {
-    let disk1 = new DiskComponent(3);
     let diskPosition1 = this.diskPositions[0];
-    disk1.topOffset = diskPosition1.topOffset;
-    disk1.leftOffset = diskPosition1.leftOffset - this.DISK_WIDTH / 2;
+    let disk1TopOffset = diskPosition1.topOffset;
+    let disk1LeftOffset = diskPosition1.leftOffset - this.diskWidth / 2;
+    let disk1 = new DiskComponent(3, "disk1", disk1TopOffset, disk1LeftOffset);
     diskPosition1.disk = disk1;
 
-    let disk2 = new DiskComponent(2);
     let diskPosition2 = this.diskPositions[1];
-    disk1.topOffset = diskPosition1.topOffset;
-    disk1.leftOffset = diskPosition1.leftOffset - this.DISK_WIDTH / 2;
+    let disk2TopOffset = diskPosition2.topOffset;
+    let disk2LeftOffset = diskPosition2.leftOffset - this.diskWidth / 2;
+    let disk2 = new DiskComponent(2, "disk2", disk2TopOffset, disk2LeftOffset);
     diskPosition2.disk = disk2;
 
-    let disk3 = new DiskComponent(1);
     let diskPosition3 = this.diskPositions[2];
-    disk1.topOffset = diskPosition1.topOffset;
-    disk1.leftOffset = diskPosition1.leftOffset - this.DISK_WIDTH / 2;
+    let disk3TopOffset = diskPosition3.topOffset;
+    let disk3LeftOffset = diskPosition3.leftOffset - this.diskWidth / 2;
+    let disk3 = new DiskComponent(1, "disk3", disk3TopOffset, disk3LeftOffset);
     diskPosition3.disk = disk3;
   }
 
