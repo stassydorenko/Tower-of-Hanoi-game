@@ -58,4 +58,32 @@ export class TowersComponent {
     diskPosition.disk = disk;
   }
 
-}
+  containsDisk(diskId: string): boolean {
+    return this.diskPositions
+      .filter(
+        (diskPosition) => diskPosition.disk.diskId === diskId
+      ).length > 0;
+  }
+
+  canPlaceDisk(disk: DiskComponent): boolean {
+    let result = false;
+    let freePosition = this.diskPositions.find((diskPosition) => !diskPosition.disk);
+
+    //if first position is empty - there are no disks on this tower
+    let positionIndex = this.diskPositions.indexOf(freePosition);
+    if(positionIndex === 0) {
+      result = true;
+    }
+    else {
+      let lowerDisk = this.diskPositions[positionIndex - 1].disk;
+      if(lowerDisk.size > disk.size) {
+        result = true;
+      }
+    }
+    return result;
+
+    }
+
+  }
+
+

@@ -11,15 +11,16 @@ import { DiskPosition } from './towers/disk.position';
 export class AppComponent implements OnInit{
 
   title: string = 'The Towers of Hanoi game';
-  towers: TowersComponent[];
+  towers: Map<string, TowersComponent>;
   selectedDiskId: string;
   selectedDiskBorder: string = "4px solid Lime";
   nonSelectedDiskBorder: string = "2px solid black";
 
   ngOnInit() {
-    this.towers = [new TowersComponent("tower1", 1),
-                   new TowersComponent("tower2", 2),
-                   new TowersComponent("tower3", 3)];   
+    this.towers.set("tower1", new TowersComponent("tower1", 1));
+    this.towers.set("tower2", new TowersComponent("tower2", 2));
+    this.towers.set("tower3", new TowersComponent("tower3", 3));
+ 
     this.towers[0].createDisks();
   }
 
@@ -28,20 +29,19 @@ export class AppComponent implements OnInit{
     this.selectDisk(event);
   }
 
-  // onTowerClick(event) {
-  //   if(this.selectedDiskId != undefined) {
+  onTowerClick(event) {
+    if(!this.isTowerClickValid(event)){
+      this.deselectPreviousDisk();
+    }
+    
+  }
 
-  //   }
-  // }
+  private isTowerClickValid(event): boolean {
+    return this.selectedDiskId !== undefined &&
+           this.towers.get(event.currentTarget.id).containsDisk(this.selectedDiskId);    
+  }
 
-  // private isTowerClickValid(event): boolean {
-  //   if(this.selectedDiskId === undefined) {
-  //     return false;
-  //   }
-  //   if(this.towers.filter()          event.currentTarget.id 
-  // }
-
-  private selectDisk(event){
+  private selectDisk(event) {
     let diskId = event.currentTarget.id;
 
     if(this.selectedDiskId != diskId) {
