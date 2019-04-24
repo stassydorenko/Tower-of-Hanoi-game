@@ -1,8 +1,8 @@
-<!--The content below is only a placeholder and can be replaced.-->
+
 <div class="container" style="margin-top:100px">
 
 <!-- START GAME FORM -->
-<div *ngIf="isStart">
+<!-- <div *ngIf="isStart">
   <div class="row justify-content-center">
     <div class="col-2">
       <label for="diskNumber" class="offset-1">Number of disks</label>
@@ -14,33 +14,27 @@
       <button id="start" class="btn btn-primary" (click)="onStart()" style="margin-top:5px">Start!</button>  
     </div>
   </div>         
-</div>
+</div> -->
+
+<!-- DISKS -->
+<div id="disk1" class="disk" style="height:28px; width:250px;" (click) = "onDiskClick($event)"></div> 
+<div id="disk2" class="disk" style="height:28px; width:210px;" (click) = "onDiskClick($event)"></div>
+<div id="disk3" class="disk" style="height:28px; width:170px;" (click) = "onDiskClick($event)"></div>
 
 <!-- TOWERS -->
-<div class="row fixed-bottom">
+<div class="row fixed-bottom" style="z-index:-1">
 
   <div class="col-2 offset-4">
 
-    <div id="tower1" class="tower" ></div> 
+    <div id="tower1" class="tower" (click) = "onTowerClick($event)"></div> 
   </div>
   <div class="col-2">
-    <div id="tower2" class="tower" ></div> 
+    <div id="tower2" class="tower" (click) = "onTowerClick($event)"></div> 
   </div>
   <div class="col-2">
-    <div id="tower3" class="tower"></div> 
+    <div id="tower3" class="tower" (click) = "onTowerClick($event)"></div> 
   </div>
 </div>
-
-<!-- DISKS -->
-<div id="disk1" class="disk" style="height:28px; width:250px;"></div> 
-<div id="disk2" class="disk" style="height:28px; width:210px;"></div>
-<div id="disk3" class="disk" style="height:28px; width:170px;"></div>
-
-
-<!-- <div id="disk1" class="disk" style="height:28px; width:250px; top:642px; left:420px"></div> 
-<div id="disk2" class="disk" style="height:28px; width:210px; top:582px; left:420px"></div>
-<div id="disk3" class="disk" style="height:28px; width:170px; top:522px; left:420px"></div> -->
-
 
 </div>
 <router-outlet></router-outlet>

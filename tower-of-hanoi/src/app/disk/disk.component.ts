@@ -1,30 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
+import { DiskSize } from '../disk/disk-size';
 
 @Component({
   selector: 'app-disk',
   templateUrl: './disk.component.html',
   styleUrls: ['./disk.component.css']
 })
-export class DiskComponent implements OnInit {
+export class DiskComponent {
 
   diskId: string;
-  size: number;
-  topOffset: number;
-  leftOffset: number;
-
-  constructor(size: number, diskId: string, topOffset: number, leftOffset: number) {
+  size: DiskSize;
+  private _topOffset: number = 0;
+  private _leftOffset: number = 0;
+  
+  constructor(size: DiskSize, diskId: string) {
     this.diskId = diskId;
     this.size = size;
-    this.topOffset = topOffset;
-    this.leftOffset = leftOffset;
-
-    let diskStyle = document.getElementById(this.diskId).style;
-    diskStyle.top = this.topOffset + "px";
-    diskStyle.left = this.leftOffset + "px";
    }
 
-  ngOnInit() {
-    
+   get topOffset(): number {
+     return this._topOffset;
+   }
+  set topOffset(value: number) {
+    this._topOffset = value;
+    document.getElementById(this.diskId).style.top = value + "px";
   }
+
+  get leftOffset(): number {
+    return this._leftOffset;
+  }
+  set leftOffset(value: number) {
+    this._leftOffset = value;
+    document.getElementById(this.diskId).style.left = value + "px";
+  }
+
+
+
+  
 
 }

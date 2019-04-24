@@ -11,9 +11,10 @@ import { DiskPosition } from './towers/disk.position';
 export class AppComponent implements OnInit{
 
   title: string = 'The Towers of Hanoi game';
-  isStart: boolean = true;
-  diskNumber: number;
   towers: TowersComponent[];
+  selectedDiskId: string;
+  selectedDiskBorder: string = "4px solid Lime";
+  nonSelectedDiskBorder: string = "2px solid black";
 
   ngOnInit() {
     this.towers = [new TowersComponent("tower1", 1),
@@ -22,11 +23,50 @@ export class AppComponent implements OnInit{
     this.towers[0].createDisks();
   }
 
-  onStart(): void {
-    if(this.diskNumber != undefined) {
-      //hide start game form
-      this.isStart = false;    
+  onDiskClick(event) {
+    this.deselectPreviousDisk();    
+    this.selectDisk(event);
+  }
+
+  // onTowerClick(event) {
+  //   if(this.selectedDiskId != undefined) {
+
+  //   }
+  // }
+
+  // private isTowerClickValid(event): boolean {
+  //   if(this.selectedDiskId === undefined) {
+  //     return false;
+  //   }
+  //   if(this.towers.filter()          event.currentTarget.id 
+  // }
+
+  private selectDisk(event){
+    let diskId = event.currentTarget.id;
+
+    if(this.selectedDiskId != diskId) {
+      this.selectedDiskId = diskId;
+      document.getElementById(this.selectedDiskId).style.border = this.selectedDiskBorder;
+      this.changeWidthAndHeigth(this.selectedDiskId, 5);
     }
+    else {
+      this.selectedDiskId = undefined;
+    }    
+  }
+
+  private deselectPreviousDisk() {
+    if(this.selectedDiskId != undefined) {
+      document.getElementById(this.selectedDiskId).style.border = this.nonSelectedDiskBorder;
+      this.changeWidthAndHeigth(this.selectedDiskId, -5);
+    } 
+  }
+
+  private changeWidthAndHeigth(elementId: string, difference: number) {
+    let elementStyle = document.getElementById(this.selectedDiskId).style;
+    let widthNumber = +elementStyle.width.replace("px", "");
+    let heigthNumber = +elementStyle.height.replace("px", "");
+    elementStyle.width = widthNumber + difference + "px";
+    elementStyle.height = heigthNumber + difference + "px";
   }
 
 }
