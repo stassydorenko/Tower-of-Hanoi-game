@@ -32,7 +32,7 @@ export class TowersComponent {
     let towerLeftOffset = clientRect.left;
 
     let disk1PositionTopOffset  = towerTopOffset + (this.towerHeigth - this.towerHeigth / 5)
-    let disk1PositionLeftOffset = towerLeftOffset - this.towerBorder - this.diskBorder;
+    let disk1PositionLeftOffset = towerLeftOffset - this.towerBorder + this.towerPosition * 2;
 
     this.diskPositions = [
           new DiskPosition(disk1PositionLeftOffset, disk1PositionTopOffset),
@@ -41,49 +41,44 @@ export class TowersComponent {
     ]
   }
 
-  createDisks() {
-    this.createDiskOnPosition(DiskSize.Large,  "disk1", this.diskPositions[0]);
-    this.createDiskOnPosition(DiskSize.Medium, "disk2", this.diskPositions[1]);
-    this.createDiskOnPosition(DiskSize.Small,  "disk3", this.diskPositions[2]);
+  initializeDisks(disks: Map<string, DiskComponent>) {
+    let positionIndex = 0;
+    disks.forEach((key, value) => this.moveDiskToPosition(key, this.diskPositions[positionIndex++]));
   }
 
-  createDiskOnPosition(diskSize: DiskSize, diskId: string, diskPosition: DiskPosition) {
-    let diskWidth = +document.getElementById(diskId).style.width.replace("px", "");
-    let diskTopOffset = diskPosition.topOffset;
-    let diskLeftOffset = diskPosition.leftOffset - diskWidth / 2 + this.towerWidth / 2;
-   
-    let disk = new DiskComponent(diskSize, diskId);
-    disk.leftOffset = diskLeftOffset;
-    disk.topOffset = diskTopOffset;
-    diskPosition.disk = disk;
+  removeDiskFromTower(diskId: string) {
+    let diskPosition = this.diskPositions.find((position) => position.hasDisk(diskId));
+    diskPosition.disk = undefined;
   }
 
-  containsDisk(diskId: string): boolean {
-    return this.diskPositions
-      .filter(
-        (diskPosition) => diskPosition.disk.diskId === diskId
-      ).length > 0;
+  moveDiskToTover(disk: DiskComponent) {
+    let freePosition = this.diskPositions.find((diskPosition) => !diskPosition.disk);
+    this.moveDiskToPosition(disk, freePosition);
+  }
+
+  hasDisksAbove(disk: DiskComponent): boolean {
+    let positionIndex = this.diskPositions.findIndex((position) => position.hasDisk(disk.diskId));
+    return positionIndex !== 2 &&
+           this.diskPositions[positionIndex+1].disk !== undefined;
   }
 
   canPlaceDisk(disk: DiskComponent): boolean {
-    let result = false;
-    let freePosition = this.diskPositions.find((diskPosition) => !diskPosition.disk);
-
-    //if first position is empty - there are no disks on this tower
-    let positionIndex = this.diskPositions.indexOf(freePosition);
-    if(positionIndex === 0) {
-      result = true;
-    }
-    else {
-      let lowerDisk = this.diskPositions[positionIndex - 1].disk;
-      if(lowerDisk.size > disk.size) {
-        result = true;
-      }
-    }
-    return result;
-
-    }
-
+    let topDiskOnTower = this.diskPositions[2].disk || this.diskPositions[1].disk || 
+                         this.diskPositions[0].disk;
+    return (topDiskOnTower === undefined) || topDiskOnTower.size > disk.size; 
   }
 
+  private moveDiskToPosition(disk: DiskComponent, diskPosition: DiskPosition) {
+    let diskWidth = +document.getElementById(disk.diskId).style.width.replace("px", "");
+    let diskTopOffset = diskPosition.topOffset;
+    let diskLeftOffset = diskPosition.leftOffset - diskWidth / 2 + this.towerWidth / 2;
+   
+    disk.leftOffset = diskLeftOffset;
+    disk.topOffset = diskTopOffset;
+    disk.tower = this;
+    diskPosition.disk = disk;
+  }
+
+ 
+}
 

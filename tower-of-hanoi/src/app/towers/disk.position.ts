@@ -9,4 +9,9 @@ export class DiskPosition {
         this.leftOffset = leftOffset;
         this.topOffset = topOffset;
     }
+
+    hasDisk(diskId: string): boolean {
+        return this.disk && 
+               this.disk.diskId === diskId;
+    }
 }

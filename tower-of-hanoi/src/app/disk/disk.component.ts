@@ -1,5 +1,6 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { DiskSize } from '../disk/disk-size';
+import { TowersComponent } from '../towers/towers.component';
 
 @Component({
   selector: 'app-disk',
@@ -10,6 +11,7 @@ export class DiskComponent {
 
   diskId: string;
   size: DiskSize;
+  tower: TowersComponent;
   private _topOffset: number = 0;
   private _leftOffset: number = 0;
   
