@@ -20,11 +20,13 @@ export class TowersComponent {
   towerPosition: number;
   diskPositions: DiskPosition[];
 
+  
   constructor(towerId: string, towerPosition: number) {
     this.towerId = towerId;
     this.towerPosition = towerPosition;
     this.initializeTower();
   }
+
   
   private initializeTower() {
     let clientRect = document.getElementById(this.towerId).getBoundingClientRect();
@@ -41,20 +43,24 @@ export class TowersComponent {
     ]
   }
 
+
   initializeDisks(disks: Map<string, DiskComponent>) {
     let positionIndex = 0;
     disks.forEach((key, value) => this.moveDiskToPosition(key, this.diskPositions[positionIndex++]));
   }
+
 
   removeDiskFromTower(diskId: string) {
     let diskPosition = this.diskPositions.find((position) => position.hasDisk(diskId));
     diskPosition.disk = undefined;
   }
 
+
   moveDiskToTover(disk: DiskComponent) {
     let freePosition = this.diskPositions.find((diskPosition) => !diskPosition.disk);
     this.moveDiskToPosition(disk, freePosition);
   }
+  
 
   hasDisksAbove(disk: DiskComponent): boolean {
     let positionIndex = this.diskPositions.findIndex((position) => position.hasDisk(disk.diskId));
@@ -62,11 +68,12 @@ export class TowersComponent {
            this.diskPositions[positionIndex+1].disk !== undefined;
   }
 
+
   canPlaceDisk(disk: DiskComponent): boolean {
-    let topDiskOnTower = this.diskPositions[2].disk || this.diskPositions[1].disk || 
-                         this.diskPositions[0].disk;
+    let topDiskOnTower = this.diskPositions[2].disk || this.diskPositions[1].disk || this.diskPositions[0].disk;
     return (topDiskOnTower === undefined) || topDiskOnTower.size > disk.size; 
   }
+
 
   private moveDiskToPosition(disk: DiskComponent, diskPosition: DiskPosition) {
     let diskWidth = +document.getElementById(disk.diskId).style.width.replace("px", "");
@@ -78,7 +85,6 @@ export class TowersComponent {
     disk.tower = this;
     diskPosition.disk = disk;
   }
-
  
 }
 

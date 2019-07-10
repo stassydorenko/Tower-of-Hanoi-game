@@ -16,10 +16,12 @@
   </div>         
 </div> -->
 
+
 <!-- DISKS -->
 <div id="disk1" class="disk" style="height:28px; width:250px;" (click) = "onDiskClick($event)"></div> 
 <div id="disk2" class="disk" style="height:28px; width:210px;" (click) = "onDiskClick($event)"></div>
 <div id="disk3" class="disk" style="height:28px; width:170px;" (click) = "onDiskClick($event)"></div>
+
 
 <!-- TOWERS -->
 <div class="row fixed-bottom" style="z-index:-1">
@@ -38,6 +40,7 @@
 
 </div>
 <router-outlet></router-outlet>
+
 
 <!-- END GAME WINDOW-->
 <div *ngIf="endGame">

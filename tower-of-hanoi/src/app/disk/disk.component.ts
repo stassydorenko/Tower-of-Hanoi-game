@@ -15,22 +15,26 @@ export class DiskComponent {
   private _topOffset: number = 0;
   private _leftOffset: number = 0;
   
+
   constructor(size: DiskSize, diskId: string) {
     this.diskId = diskId;
     this.size = size;
    }
 
-   get topOffset(): number {
+
+  get topOffset(): number {
      return this._topOffset;
-   }
+  }
+
   set topOffset(value: number) {
     this._topOffset = value;
     document.getElementById(this.diskId).style.top = value + "px";
   }
-
+  
   get leftOffset(): number {
     return this._leftOffset;
   }
+
   set leftOffset(value: number) {
     this._leftOffset = value;
     document.getElementById(this.diskId).style.left = value + "px";

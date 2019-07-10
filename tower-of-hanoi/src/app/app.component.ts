@@ -19,19 +19,21 @@ export class AppComponent implements OnInit{
   towers: TowersComponent[];
   disks:  Map<string, DiskComponent> = new Map();
 
+
   ngOnInit() {
     this.towers = [
       new TowersComponent("tower1", 1),
       new TowersComponent("tower2", 2),
       new TowersComponent("tower3", 3)
     ];
-    
+
     this.disks.set("disk1", new DiskComponent(DiskSize.Large, "disk1"));
     this.disks.set("disk2", new DiskComponent(DiskSize.Medium, "disk2"));
     this.disks.set("disk3", new DiskComponent(DiskSize.Small, "disk3"));
 
     this.towers[0].initializeDisks(this.disks);
   }
+
 
   onDiskClick(event) {
     if(this.isDiskClickValid(event)) {
@@ -40,9 +42,10 @@ export class AppComponent implements OnInit{
     }
   }
 
+
   onTowerClick(event) {
-    let selectedTower = this.towers.find((tower) => 
-        tower.towerId === this.getIdOfSelectedElement(event));
+    let selectedTower = this.towers.find(
+      (tower) => tower.towerId === this.getIdOfSelectedElement(event));
 
     if(this.isTowerClickValid(selectedTower)) {
       let disk = this.disks.get(this.selectedDiskId);
@@ -58,6 +61,7 @@ export class AppComponent implements OnInit{
     }
   }
 
+
   private isEndGame(): boolean {
     let thirdTower = this.towers[2];
     return thirdTower.diskPositions[0].disk !== undefined && 
@@ -65,11 +69,13 @@ export class AppComponent implements OnInit{
            thirdTower.diskPositions[2].disk !== undefined 
   }
 
+
   private isDiskClickValid(event): boolean {
     let selectedDisk = this.disks.get(this.getIdOfSelectedElement(event));
     let currentTower = selectedDisk.tower;
     return !currentTower.hasDisksAbove(selectedDisk) && !this.endGame;
   }
+
 
   private isTowerClickValid(selectedTower: TowersComponent): boolean {
     let selectedDisk = this.disks.get(this.selectedDiskId);
@@ -80,33 +86,37 @@ export class AppComponent implements OnInit{
 
   }
 
+
   private selectDisk(event) {
     let diskId = this.getIdOfSelectedElement(event);
-
     if(this.selectedDiskId != diskId) {
       this.selectedDiskId = diskId;
-      document.getElementById(this.selectedDiskId).style.border = this.selectedDiskBorder;
-      this.changeWidthAndHeigth(this.selectedDiskId, 5);
+      let elementStyle = document.getElementById(this.selectedDiskId).style;
+      elementStyle.border = this.selectedDiskBorder;
+      this.changeWidthAndHeigth(elementStyle, 5);
     }
     else {
       this.selectedDiskId = undefined;
     }    
   }
 
+
   private deselectPreviousDisk() {
     if(this.selectedDiskId != undefined) {
-      document.getElementById(this.selectedDiskId).style.border = this.nonSelectedDiskBorder;
-      this.changeWidthAndHeigth(this.selectedDiskId, -5);
+      let elementStyle = document.getElementById(this.selectedDiskId).style;
+      elementStyle.border = this.nonSelectedDiskBorder;
+      this.changeWidthAndHeigth(elementStyle, -5);
     } 
   }
 
-  private changeWidthAndHeigth(elementId: string, difference: number) {
-    let elementStyle = document.getElementById(this.selectedDiskId).style;
+
+  private changeWidthAndHeigth(elementStyle: CSSStyleDeclaration, difference: number) {
     let widthNumber = +elementStyle.width.replace("px", "");
     let heigthNumber = +elementStyle.height.replace("px", "");
     elementStyle.width = widthNumber + difference + "px";
     elementStyle.height = heigthNumber + difference + "px";
   }
+
 
   private getIdOfSelectedElement(event): string {
     return event.currentTarget.id;
