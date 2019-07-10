@@ -12,6 +12,7 @@ import { DiskSize } from './disk/disk-size';
 export class AppComponent implements OnInit{
 
   title: string = 'The Towers of Hanoi game';
+  endGame: boolean = false;
   selectedDiskId: string;
   selectedDiskBorder: string = "4px solid Lime";
   nonSelectedDiskBorder: string = "2px solid black";
@@ -51,19 +52,32 @@ export class AppComponent implements OnInit{
 
     this.deselectPreviousDisk();  
     this.selectedDiskId = undefined;
+
+    if(this.isEndGame()) {
+      this.endGame = true;
+    }
+  }
+
+  private isEndGame(): boolean {
+    let thirdTower = this.towers[2];
+    return thirdTower.diskPositions[0].disk !== undefined && 
+           thirdTower.diskPositions[1].disk !== undefined &&
+           thirdTower.diskPositions[2].disk !== undefined 
   }
 
   private isDiskClickValid(event): boolean {
     let selectedDisk = this.disks.get(this.getIdOfSelectedElement(event));
     let currentTower = selectedDisk.tower;
-    return !currentTower.hasDisksAbove(selectedDisk);
+    return !currentTower.hasDisksAbove(selectedDisk) && !this.endGame;
   }
 
   private isTowerClickValid(selectedTower: TowersComponent): boolean {
     let selectedDisk = this.disks.get(this.selectedDiskId);
     return this.selectedDiskId !== undefined &&
            selectedTower.towerId !==  selectedDisk.tower.towerId &&
-           selectedTower.canPlaceDisk(selectedDisk);
+           selectedTower.canPlaceDisk(selectedDisk) &&
+           !this.endGame;
+
   }
 
   private selectDisk(event) {
